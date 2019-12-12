@@ -1,21 +1,37 @@
-# node-js-getting-started
+# MPWAR Todos
 
-A barebones Node.js app using [Express 4](http://expressjs.com/).
+Simple API to create todo lists [https://infinite-citadel-42597.herokuapp.com/](https://infinite-citadel-42597.herokuapp.com/).
 
-This application supports the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
+Each :username is a unique todo list
 
-## Running Locally
+## Endpoints
 
-Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cli.heroku.com/) installed.
+### Get todos
 
-```sh
-$ git clone https://github.com/heroku/node-js-getting-started.git # or clone your own fork
-$ cd node-js-getting-started
-$ npm install
-$ npm start
+`GET /todos/:username`
+
+### Post todo
+
+`POST /todos/:username`
+
+```
+Body
+{
+    "id": 1,
+    "text": "Agarra la sombrilla"
+}
 ```
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+### Mark as done/undone
+
+`POST /todos/:username/:id`
+
+```
+Body
+{
+    "done": true/false
+}
+```
 
 ## Deploying to Heroku
 
@@ -27,13 +43,3 @@ $ heroku open
 or
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
-## Documentation
-
-For more information about using Node.js on Heroku, see these Dev Center articles:
-
-- [Getting Started with Node.js on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-- [Heroku Node.js Support](https://devcenter.heroku.com/articles/nodejs-support)
-- [Node.js on Heroku](https://devcenter.heroku.com/categories/nodejs)
-- [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
-- [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
