@@ -1,6 +1,6 @@
 # MPWAR Todos
 
-Simple API to create todo lists [https://infinite-citadel-42597.herokuapp.com/](https://infinite-citadel-42597.herokuapp.com/).
+Simple API to create todo lists [https://todos-mpwar.herokuapp.com/](https://todos-mpwar.herokuapp.com/).
 
 Each :username is a unique todo list
 
