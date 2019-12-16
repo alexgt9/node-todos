@@ -42,7 +42,7 @@ express()
       todos[username][newTodo.id] = newTodo;
       res.json(newTodo);
   })
-  .patch('/users/:username/todos:id', (req, res) => {
+  .patch('/users/:username/todos/:id', (req, res) => {
       const username = req.params.username;
       const id = req.params.id;
       if (!todos[username] || !todos[username][id]) {
