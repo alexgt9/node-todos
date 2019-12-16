@@ -40,7 +40,7 @@ express()
       newTodo.createdAt = new Date();
 
       todos[username][newTodo.id] = newTodo;
-      res.json();
+      res.json(newTodo);
   })
   .patch('/users/:username/todos:id', (req, res) => {
       const username = req.params.username;
