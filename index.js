@@ -1,6 +1,8 @@
-const express = require('express')
+const express = require('express');
 const uuidv4 = require('uuid/v4');
-const path = require('path')
+const path = require('path');
+var cors = require('cors');
+
 const PORT = process.env.PORT || 5000
 
 const todos = {};
@@ -10,6 +12,7 @@ todos['aleh']['911d7404-f927-46b8-bde9-759be745061b'] = {'id': '911d7404-f927-46
 todos['aleh']['911d7404-f927-46b8-bde9-759be745061a'] = {'id': '911d7404-f927-46b8-bde9-759be745061a', 'text': 'Ponte a bailar', 'completed': false, 'author': 'aleh', 'createdAt': new Date() };
 
 express()
+  .use(cors())
   .use(express.static(path.join(__dirname, 'public')))
   .use(express.json())
   .set('views', path.join(__dirname, 'views'))
