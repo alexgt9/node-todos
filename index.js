@@ -51,10 +51,25 @@ express()
           return;
       }
 
-      const completed = req.body.completed || false;
+      const completed = req.body.completed || todos[username][id].completed;
+      const text = req.body.text || todos[username][id].text;
 
       todos[username][id].completed = completed;
+      todos[username][id].text = text;
 
       res.json(todos[username][id]);
+  })
+  .delete('/users/:username/todos/:id', (req, res) => {
+      const username = req.params.username;
+      const id = req.params.id;
+      if (!todos[username] || !todos[username][id]) {
+          res.status(404).json({ "error": 'Not found'});
+
+          return;
+      }
+
+      delete todos[username][id];
+
+      res.json({});
   })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
