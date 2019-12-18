@@ -1,45 +1,69 @@
 # MPWAR Todos
 
-Simple API to create todo lists [https://todos-mpwar.herokuapp.com/](https://todos-mpwar.herokuapp.com/).
+Simple API to create todo lists [https://todos-mpwar.herokuapp.com](https://todos-mpwar.herokuapp.com).
 
-Each :username is a unique todo list
+Each `:username` is a unique todo list
 
 ## Endpoints
 
 ### Get todos
 
-`GET /todos/:username`
+`GET /users/:username/todos`
+
+Response
+```
+[
+    {
+        "id": 1,
+        "text": "Agarra la mochila",
+        "completed": false,
+        "author": "aleh",
+        "createdAt": "2019-12-18T19:12:47.826Z"
+    },
+    {
+        ...
+    }
+]
+```
 
 ### Post todo
 
-`POST /todos/:username`
+`POST /users/:username/todos`
 
 ```
 Body
 {
-    "id": 1,
     "text": "Agarra la sombrilla"
 }
 ```
 
-### Mark as done/undone
+### Edit ToDo
 
-`POST /todos/:username/:id`
+`PATCH /users/:username/todos/:id`
 
 ```
 Body
 {
-    "done": true/false
+    "completed": true/false,
+    "text": "New text"
 }
 ```
+
+### Delete ToDo
+
+`DELETE /users/:username/todos/:id`
 
 ## Deploying to Heroku
 
 ```
-$ heroku create
 $ git push heroku master
 $ heroku open
 ```
-or
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+## Working locally
+
+```
+$ heroku local
+```
+
+Api will be available at [http://localhost:5000](http://localhost:5000)

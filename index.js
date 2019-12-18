@@ -30,14 +30,15 @@ express()
 
       if (!todos[username]) {
           todos[username] = {};
-
-          return;
       }
-      let newTodo = req.body;
-      newTodo.id = uuidv4();
-      newTodo.completed = false;
-      newTodo.author = username;
-      newTodo.createdAt = new Date();
+
+      let newTodo = {
+        "text": req.body.text,
+        "id": uuidv4(),
+        "completed": false,
+        "author": username,
+        "createdAt": new Date()
+      };
 
       todos[username][newTodo.id] = newTodo;
       res.json(newTodo);
