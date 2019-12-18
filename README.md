@@ -17,7 +17,7 @@ Response
         "id": 1,
         "text": "Agarra la mochila",
         "completed": false,
-        "author": "aleh",
+        "author": ":username",
         "createdAt": "2019-12-18T19:12:47.826Z"
     },
     {
