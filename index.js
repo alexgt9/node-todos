@@ -15,10 +15,8 @@ express()
   .use(cors())
   .use(express.static(path.join(__dirname, 'public')))
   .use(express.json())
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
   .get('/', (req, res) => {
-      res.sendFile(path.join(__dirname+'/README.html'));
+      res.redirect('README.html');
   })
   .get('/users/:username/todos', (req, res) => {
       const username = req.params.username;
