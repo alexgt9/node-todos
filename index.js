@@ -53,7 +53,7 @@ express()
           return;
       }
 
-      const completed = req.body.completed || todos[username][id].completed;
+      const completed = req.body.completed ?? todos[username][id].completed;
       const text = req.body.text || todos[username][id].text;
 
       todos[username][id].completed = completed;
