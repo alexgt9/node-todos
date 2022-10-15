@@ -7,9 +7,33 @@ const PORT = process.env.PORT || 5000
 
 const todos = {};
 todos['aleh'] = {};
-todos['aleh']['911d7404-f927-46b8-bde9-759be745061d'] = {'id': '911d7404-f927-46b8-bde9-759be745061d', 'text': 'Agarra la sombrilla', 'completed': false, 'author': 'aleh', 'createdAt': new Date() };
-todos['aleh']['911d7404-f927-46b8-bde9-759be745061b'] = {'id': '911d7404-f927-46b8-bde9-759be745061b', 'text': 'Agarra el bañador', 'completed': false, 'author': 'aleh', 'createdAt': new Date() };
-todos['aleh']['911d7404-f927-46b8-bde9-759be745061a'] = {'id': '911d7404-f927-46b8-bde9-759be745061a', 'text': 'Ponte a bailar', 'completed': false, 'author': 'aleh', 'createdAt': new Date() };
+todos['aleh']['911d7404-f927-46b8-bde9-759be745061d'] = {
+    id: '911d7404-f927-46b8-bde9-759be745061d',
+    text: 'Agarra la sombrilla',
+    description: '',
+    completed: false,
+    author: 'aleh',
+    tags: [],
+    createdAt: new Date() 
+};
+todos['aleh']['911d7404-f927-46b8-bde9-759be745061b'] = {
+    id: '911d7404-f927-46b8-bde9-759be745061b',
+    text: 'Agarra el bañador',
+    description: 'Y pontelo',
+    completed: false,
+    author: 'aleh',
+    tags: [],
+    createdAt: new Date() 
+};
+todos['aleh']['911d7404-f927-46b8-bde9-759be745061a'] = {
+    id: '911d7404-f927-46b8-bde9-759be745061a',
+    text: 'Ponte a bailar',
+    description: 'Y que salga el sol',
+    completed: false,
+    author: 'aleh',
+    tags: [],
+    createdAt: new Date() 
+};
 
 express()
   .use(cors())
@@ -34,11 +58,13 @@ express()
       }
 
       let newTodo = {
-        "text": req.body.text,
-        "id": uuidv4(),
-        "completed": false,
-        "author": username,
-        "createdAt": new Date()
+        id: uuidv4(),
+        text: req.body.text,
+        description: '',
+        completed: false,
+        author: username,
+        tags: [],
+        createdAt: new Date()
       };
 
       todos[username][newTodo.id] = newTodo;
@@ -55,9 +81,13 @@ express()
 
       const completed = req.body.completed ?? todos[username][id].completed;
       const text = req.body.text || todos[username][id].text;
+      const description = req.body.description || todos[username][id].description;
+      const tags = req.body.tags || todos[username][id].tags;
 
       todos[username][id].completed = completed;
       todos[username][id].text = text;
+      todos[username][id].description = description;
+      todos[username][id].tags = tags;
 
       res.json(todos[username][id]);
   })
