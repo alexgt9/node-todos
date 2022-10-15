@@ -16,8 +16,14 @@ Response
     {
         "id": 1,
         "text": "Agarra la mochila",
+        "description": "Y ponte al sol, esta es una descripción más larga",
         "completed": false,
         "author": ":username",
+        "tags": [
+            "important",
+            "school",
+            "LaSalle"
+        ],
         "createdAt": "2019-12-18T19:12:47.826Z"
     },
     {
@@ -45,7 +51,13 @@ Body
 Body
 {
     "completed": true/false,
-    "text": "New text"
+    "text": "New text",
+    "description": "New description",
+    "tags": [
+        "important",
+        "school",
+        "LaSalle"
+    ]
 }
 ```
 

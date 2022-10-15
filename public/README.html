@@ -1,786 +1,434 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>@font-face {
-  font-family: octicons-anchor;
-  src: url(https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.woff) format('woff');
-}
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 
-* {
-    box-sizing: border-box;
-}
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 
 body {
-    width: 980px;
-    margin-right: auto;
-    margin-left: auto;
-    color:#333;
-    background:#fff;
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
 }
 
-body .markdown-body {
-    padding: 45px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    word-wrap: break-word;
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
 }
 
-pre {
-    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
 }
 
-.markdown-body {
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  color: #333;
-  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 16px;
-  line-height: 1.6;
-  word-wrap: break-word;
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
 }
 
-.markdown-body a {
-  background-color: transparent;
+body.showEditorSelection .code-line {
+	position: relative;
 }
 
-.markdown-body a:active,
-.markdown-body a:hover {
-  outline: 0;
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
 }
 
-.markdown-body strong {
-  font-weight: bold;
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
 }
 
-.markdown-body h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
 }
 
-.markdown-body img {
-  border: 0;
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
 }
 
-.markdown-body hr {
-  box-sizing: content-box;
-  height: 0;
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
 }
 
-.markdown-body pre {
-  overflow: auto;
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
 }
 
-.markdown-body code,
-.markdown-body kbd,
-.markdown-body pre {
-  font-family: monospace, monospace;
-  font-size: 1em;
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
 }
 
-.markdown-body input {
-  color: inherit;
-  font: inherit;
-  margin: 0;
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
 }
 
-.markdown-body html input[disabled] {
-  cursor: default;
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
 }
 
-.markdown-body input {
-  line-height: normal;
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
 }
 
-.markdown-body input[type="checkbox"] {
-  box-sizing: border-box;
-  padding: 0;
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
 }
 
-.markdown-body table {
-  border-collapse: collapse;
-  border-spacing: 0;
+img {
+	max-width: 100%;
+	max-height: 100%;
 }
 
-.markdown-body td,
-.markdown-body th {
-  padding: 0;
+a {
+	text-decoration: none;
 }
 
-.markdown-body input {
-  font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+a:hover {
+	text-decoration: underline;
 }
 
-.markdown-body a {
-  color: #4078c0;
-  text-decoration: none;
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
 }
 
-.markdown-body a:hover,
-.markdown-body a:active {
-  text-decoration: underline;
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
 }
 
-.markdown-body hr {
-  height: 0;
-  margin: 15px 0;
-  overflow: hidden;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid #ddd;
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
 }
 
-.markdown-body hr:before {
-  display: table;
-  content: "";
+h1, h2, h3 {
+	font-weight: normal;
 }
 
-.markdown-body hr:after {
-  display: table;
-  clear: both;
-  content: "";
+table {
+	border-collapse: collapse;
 }
 
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
-  margin-top: 15px;
-  margin-bottom: 15px;
-  line-height: 1.1;
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
 }
 
-.markdown-body h1 {
-  font-size: 30px;
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
 }
 
-.markdown-body h2 {
-  font-size: 21px;
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
 }
 
-.markdown-body h3 {
-  font-size: 16px;
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
 }
 
-.markdown-body h4 {
-  font-size: 14px;
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
 }
 
-.markdown-body h5 {
-  font-size: 12px;
+body.wordWrap pre {
+	white-space: pre-wrap;
 }
 
-.markdown-body h6 {
-  font-size: 11px;
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
 }
 
-.markdown-body blockquote {
-  margin: 0;
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
 }
 
-.markdown-body ul,
-.markdown-body ol {
-  padding: 0;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body ol ol,
-.markdown-body ul ol {
-  list-style-type: lower-roman;
-}
-
-.markdown-body ul ul ol,
-.markdown-body ul ol ol,
-.markdown-body ol ul ol,
-.markdown-body ol ol ol {
-  list-style-type: lower-alpha;
-}
-
-.markdown-body dd {
-  margin-left: 0;
-}
-
-.markdown-body code {
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  font-size: 12px;
-}
-
-.markdown-body pre {
-  margin-top: 0;
-  margin-bottom: 0;
-  font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
-}
-
-.markdown-body .select::-ms-expand {
-  opacity: 0;
-}
-
-.markdown-body .octicon {
-  font: normal normal normal 16px/1 octicons-anchor;
-  display: inline-block;
-  text-decoration: none;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.markdown-body .octicon-link:before {
-  content: '\f05c';
-}
-
-.markdown-body:before {
-  display: table;
-  content: "";
-}
-
-.markdown-body:after {
-  display: table;
-  clear: both;
-  content: "";
-}
-
-.markdown-body>*:first-child {
-  margin-top: 0 !important;
-}
-
-.markdown-body>*:last-child {
-  margin-bottom: 0 !important;
-}
-
-.markdown-body a:not([href]) {
-  color: inherit;
-  text-decoration: none;
-}
-
-.markdown-body .anchor {
-  display: inline-block;
-  padding-right: 2px;
-  margin-left: -18px;
-}
-
-.markdown-body .anchor:focus {
-  outline: none;
-}
-
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
-  margin-top: 1em;
-  margin-bottom: 16px;
-  font-weight: bold;
-  line-height: 1.4;
-}
+/** Theming */
 
-.markdown-body h1 .octicon-link,
-.markdown-body h2 .octicon-link,
-.markdown-body h3 .octicon-link,
-.markdown-body h4 .octicon-link,
-.markdown-body h5 .octicon-link,
-.markdown-body h6 .octicon-link {
-  color: #000;
-  vertical-align: middle;
-  visibility: hidden;
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
 }
 
-.markdown-body h1:hover .anchor,
-.markdown-body h2:hover .anchor,
-.markdown-body h3:hover .anchor,
-.markdown-body h4:hover .anchor,
-.markdown-body h5:hover .anchor,
-.markdown-body h6:hover .anchor {
-  text-decoration: none;
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
 }
 
-.markdown-body h1:hover .anchor .octicon-link,
-.markdown-body h2:hover .anchor .octicon-link,
-.markdown-body h3:hover .anchor .octicon-link,
-.markdown-body h4:hover .anchor .octicon-link,
-.markdown-body h5:hover .anchor .octicon-link,
-.markdown-body h6:hover .anchor .octicon-link {
-  visibility: visible;
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
 }
 
-.markdown-body h1 {
-  padding-bottom: 0.3em;
-  font-size: 2.25em;
-  line-height: 1.2;
-  border-bottom: 1px solid #eee;
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
 }
 
-.markdown-body h1 .anchor {
-  line-height: 1;
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
 }
 
-.markdown-body h2 {
-  padding-bottom: 0.3em;
-  font-size: 1.75em;
-  line-height: 1.225;
-  border-bottom: 1px solid #eee;
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
 }
 
-.markdown-body h2 .anchor {
-  line-height: 1;
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
 }
 
-.markdown-body h3 {
-  font-size: 1.5em;
-  line-height: 1.43;
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
 }
 
-.markdown-body h3 .anchor {
-  line-height: 1.2;
-}
-
-.markdown-body h4 {
-  font-size: 1.25em;
-}
-
-.markdown-body h4 .anchor {
-  line-height: 1.2;
-}
-
-.markdown-body h5 {
-  font-size: 1em;
-}
-
-.markdown-body h5 .anchor {
-  line-height: 1.1;
-}
-
-.markdown-body h6 {
-  font-size: 1em;
-  color: #777;
-}
-
-.markdown-body h6 .anchor {
-  line-height: 1.1;
-}
-
-.markdown-body p,
-.markdown-body blockquote,
-.markdown-body ul,
-.markdown-body ol,
-.markdown-body dl,
-.markdown-body table,
-.markdown-body pre {
-  margin-top: 0;
-  margin-bottom: 16px;
-}
-
-.markdown-body hr {
-  height: 4px;
-  padding: 0;
-  margin: 16px 0;
-  background-color: #e7e7e7;
-  border: 0 none;
-}
+</style>
 
-.markdown-body ul,
-.markdown-body ol {
-  padding-left: 2em;
-}
-
-.markdown-body ul ul,
-.markdown-body ul ol,
-.markdown-body ol ol,
-.markdown-body ol ul {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body li>p {
-  margin-top: 16px;
-}
-
-.markdown-body dl {
-  padding: 0;
-}
-
-.markdown-body dl dt {
-  padding: 0;
-  margin-top: 16px;
-  font-size: 1em;
-  font-style: italic;
-  font-weight: bold;
-}
-
-.markdown-body dl dd {
-  padding: 0 16px;
-  margin-bottom: 16px;
-}
-
-.markdown-body blockquote {
-  padding: 0 15px;
-  color: #777;
-  border-left: 4px solid #ddd;
-}
-
-.markdown-body blockquote>:first-child {
-  margin-top: 0;
-}
-
-.markdown-body blockquote>:last-child {
-  margin-bottom: 0;
-}
+<style>
+/**
+ * GitHub Gist Theme
+ * Author : Anthony Attard - https://github.com/AnthonyAttard
+ * Author : Louis Barranqueiro - https://github.com/LouisBarranqueiro
+ */
 
-.markdown-body table {
+.hljs {
   display: block;
-  width: 100%;
-  overflow: auto;
-  word-break: normal;
-  word-break: keep-all;
+  background: white;
+  padding: 0.5em;
+  color: #333333;
+  overflow-x: auto;
 }
 
-.markdown-body table th {
-  font-weight: bold;
-}
-
-.markdown-body table th,
-.markdown-body table td {
-  padding: 6px 13px;
-  border: 1px solid #ddd;
-}
-
-.markdown-body table tr {
-  background-color: #fff;
-  border-top: 1px solid #ccc;
-}
-
-.markdown-body table tr:nth-child(2n) {
-  background-color: #f8f8f8;
-}
-
-.markdown-body img {
-  max-width: 100%;
-  box-sizing: content-box;
-  background-color: #fff;
-}
-
-.markdown-body code {
-  padding: 0;
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
-  margin: 0;
-  font-size: 85%;
-  background-color: rgba(0,0,0,0.04);
-  border-radius: 3px;
-}
-
-.markdown-body code:before,
-.markdown-body code:after {
-  letter-spacing: -0.2em;
-  content: "\00a0";
-}
-
-.markdown-body pre>code {
-  padding: 0;
-  margin: 0;
-  font-size: 100%;
-  word-break: normal;
-  white-space: pre;
-  background: transparent;
-  border: 0;
-}
-
-.markdown-body .highlight {
-  margin-bottom: 16px;
-}
-
-.markdown-body .highlight pre,
-.markdown-body pre {
-  padding: 16px;
-  overflow: auto;
-  font-size: 85%;
-  line-height: 1.45;
-  background-color: #f7f7f7;
-  border-radius: 3px;
-}
-
-.markdown-body .highlight pre {
-  margin-bottom: 0;
-  word-break: normal;
-}
-
-.markdown-body pre {
-  word-wrap: normal;
-}
-
-.markdown-body pre code {
-  display: inline;
-  max-width: initial;
-  padding: 0;
-  margin: 0;
-  overflow: initial;
-  line-height: inherit;
-  word-wrap: normal;
-  background-color: transparent;
-  border: 0;
-}
-
-.markdown-body pre code:before,
-.markdown-body pre code:after {
-  content: normal;
-}
-
-.markdown-body kbd {
-  display: inline-block;
-  padding: 3px 5px;
-  font-size: 11px;
-  line-height: 10px;
-  color: #555;
-  vertical-align: middle;
-  background-color: #fcfcfc;
-  border: solid 1px #ccc;
-  border-bottom-color: #bbb;
-  border-radius: 3px;
-  box-shadow: inset 0 -1px 0 #bbb;
-}
-
-.markdown-body .pl-c {
+.hljs-comment,
+.hljs-meta {
   color: #969896;
 }
 
-.markdown-body .pl-c1,
-.markdown-body .pl-s .pl-v {
+.hljs-variable,
+.hljs-template-variable,
+.hljs-strong,
+.hljs-emphasis,
+.hljs-quote {
+  color: #df5000;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-type {
+  color: #d73a49;
+}
+
+.hljs-literal,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-attribute {
   color: #0086b3;
 }
 
-.markdown-body .pl-e,
-.markdown-body .pl-en {
-  color: #795da3;
-}
-
-.markdown-body .pl-s .pl-s1,
-.markdown-body .pl-smi {
-  color: #333;
-}
-
-.markdown-body .pl-ent {
+.hljs-section,
+.hljs-name {
   color: #63a35c;
 }
 
-.markdown-body .pl-k {
-  color: #a71d5d;
+.hljs-tag {
+  color: #333333;
 }
 
-.markdown-body .pl-pds,
-.markdown-body .pl-s,
-.markdown-body .pl-s .pl-pse .pl-s1,
-.markdown-body .pl-sr,
-.markdown-body .pl-sr .pl-cce,
-.markdown-body .pl-sr .pl-sra,
-.markdown-body .pl-sr .pl-sre {
-  color: #183691;
+.hljs-title,
+.hljs-attr,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #6f42c1;
 }
 
-.markdown-body .pl-v {
-  color: #ed6a43;
-}
-
-.markdown-body .pl-id {
-  color: #b52a1d;
-}
-
-.markdown-body .pl-ii {
-  background-color: #b52a1d;
-  color: #f8f8f8;
-}
-
-.markdown-body .pl-sr .pl-cce {
-  color: #63a35c;
-  font-weight: bold;
-}
-
-.markdown-body .pl-ml {
-  color: #693a17;
-}
-
-.markdown-body .pl-mh,
-.markdown-body .pl-mh .pl-en,
-.markdown-body .pl-ms {
-  color: #1d3e81;
-  font-weight: bold;
-}
-
-.markdown-body .pl-mq {
-  color: #008080;
-}
-
-.markdown-body .pl-mi {
-  color: #333;
-  font-style: italic;
-}
-
-.markdown-body .pl-mb {
-  color: #333;
-  font-weight: bold;
-}
-
-.markdown-body .pl-md {
-  background-color: #ffecec;
-  color: #bd2c00;
-}
-
-.markdown-body .pl-mi1 {
-  background-color: #eaffea;
+.hljs-addition {
   color: #55a532;
+  background-color: #eaffea;
 }
 
-.markdown-body .pl-mdr {
-  color: #795da3;
-  font-weight: bold;
+.hljs-deletion {
+  color: #bd2c00;
+  background-color: #ffecec;
 }
 
-.markdown-body .pl-mo {
-  color: #1d3e81;
+.hljs-link {
+  text-decoration: underline;
 }
 
-.markdown-body kbd {
-  display: inline-block;
-  padding: 3px 5px;
-  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  line-height: 10px;
-  color: #555;
-  vertical-align: middle;
-  background-color: #fcfcfc;
-  border: solid 1px #ccc;
-  border-bottom-color: #bbb;
-  border-radius: 3px;
-  box-shadow: inset 0 -1px 0 #bbb;
+.hljs-number {
+  color: #005cc5;
 }
 
-.markdown-body .plan-price-unit {
-  color: #767676;
-  font-weight: normal;
+.hljs-string {
+  color: #032f62;
 }
 
-.markdown-body .task-list-item {
-  list-style-type: none;
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
 }
 
-.markdown-body .task-list-item+.task-list-item {
-  margin-top: 3px;
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
 }
 
-.markdown-body .task-list-item input {
-  margin: 0 0.35em 0.25em -1.6em;
-  vertical-align: middle;
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
 }
 
-.markdown-body .plan-choice {
-  padding: 15px;
-  padding-left: 40px;
-  display: block;
-  border: 1px solid #e0e0e0;
-  position: relative;
-  font-weight: normal;
-  background-color: #fafafa;
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
 }
 
-.markdown-body .plan-choice.open {
-  background-color: #fff;
+.emoji {
+	height: 1.4em;
 }
 
-.markdown-body .plan-choice.open .plan-choice-seat-breakdown {
-  display: block;
+code {
+	font-size: 14px;
+	line-height: 19px;
 }
 
-.markdown-body .plan-choice-free {
-  border-radius: 3px 3px 0 0;
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
 }
 
-.markdown-body .plan-choice-paid {
-  border-radius: 0 0 3px 3px;
-  border-top: 0;
-  margin-bottom: 20px;
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
 }
 
-.markdown-body .plan-choice-radio {
-  position: absolute;
-  left: 15px;
-  top: 18px;
-}
-
-.markdown-body .plan-choice-exp {
-  color: #999;
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.markdown-body .plan-choice-seat-breakdown {
-  margin-top: 10px;
-  display: none;
-}
-
-.markdown-body :checked+.radio-label {
-  z-index: 1;
-  position: relative;
-  border-color: #4078c0;
-}
-
-@media print {
-  body .markdown-body {
-    padding: 0;
-    border: none;
-  }
-}
-</style><title>README</title></head><body><article class="markdown-body"><h1>
-<a id="user-content-mpwar-todos" class="anchor" href="#mpwar-todos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MPWAR Todos</h1>
-<p>Simple API to create todo lists <a href="https://todos-mpwar.herokuapp.com" rel="nofollow">https://todos-mpwar.herokuapp.com</a>.</p>
+</style>
+<link rel="stylesheet" href="file:///Users/alexgt9/code/markdown-pdf.css" type="text/css">
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="mpwar-todos">MPWAR Todos</h1>
+<p>Simple API to create todo lists <a href="https://todos-mpwar.herokuapp.com">https://todos-mpwar.herokuapp.com</a>.</p>
 <p>Each <code>:username</code> is a unique todo list</p>
-<h2>
-<a id="user-content-endpoints" class="anchor" href="#endpoints" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Endpoints</h2>
-<h3>
-<a id="user-content-get-todos" class="anchor" href="#get-todos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Get todos</h3>
+<h2 id="endpoints">Endpoints</h2>
+<h3 id="get-todos">Get todos</h3>
 <p><code>GET /users/:username/todos</code></p>
 <p>Response</p>
-<pre><code>[
+<pre class="hljs"><code><div>[
     {
-        "id": 1,
-        "text": "Agarra la mochila",
-        "completed": false,
-        "author": ":username",
-        "createdAt": "2019-12-18T19:12:47.826Z"
+        &quot;id&quot;: 1,
+        &quot;text&quot;: &quot;Agarra la mochila&quot;,
+        &quot;description&quot;: &quot;Y ponte al sol, esta es una descripción más larga&quot;,
+        &quot;completed&quot;: false,
+        &quot;author&quot;: &quot;:username&quot;,
+        &quot;tags&quot;: [
+            &quot;important&quot;,
+            &quot;school&quot;,
+            &quot;LaSalle&quot;
+        ],
+        &quot;createdAt&quot;: &quot;2019-12-18T19:12:47.826Z&quot;
     },
     {
         ...
     }
 ]
-</code></pre>
-<h3>
-<a id="user-content-post-todo" class="anchor" href="#post-todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Post todo</h3>
+</div></code></pre>
+<h3 id="post-todo">Post todo</h3>
 <p><code>POST /users/:username/todos</code></p>
-<pre><code>Body
+<pre class="hljs"><code><div>Body
 {
-    "text": "Agarra la sombrilla"
+    &quot;text&quot;: &quot;Agarra la sombrilla&quot;
 }
-</code></pre>
-<h3>
-<a id="user-content-edit-todo" class="anchor" href="#edit-todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit ToDo</h3>
+</div></code></pre>
+<h3 id="edit-todo">Edit ToDo</h3>
 <p><code>PATCH /users/:username/todos/:id</code></p>
-<pre><code>Body
+<pre class="hljs"><code><div>Body
 {
-    "completed": true/false,
-    "text": "New text"
+    &quot;completed&quot;: true/false,
+    &quot;text&quot;: &quot;New text&quot;,
+    &quot;description&quot;: &quot;New description&quot;,
+    &quot;tags&quot;: [
+        &quot;important&quot;,
+        &quot;school&quot;,
+        &quot;LaSalle&quot;
+    ]
 }
-</code></pre>
-<h3>
-<a id="user-content-delete-todo" class="anchor" href="#delete-todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Delete ToDo</h3>
+</div></code></pre>
+<h3 id="delete-todo">Delete ToDo</h3>
 <p><code>DELETE /users/:username/todos/:id</code></p>
-<h2>
-<a id="user-content-deploying-to-heroku" class="anchor" href="#deploying-to-heroku" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Deploying to Heroku</h2>
-<pre><code>$ git push heroku master
+<h2 id="deploying-to-heroku">Deploying to Heroku</h2>
+<pre class="hljs"><code><div>$ git push heroku master
 $ heroku open
-</code></pre>
-<h2>
-<a id="user-content-working-locally" class="anchor" href="#working-locally" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Working locally</h2>
-<pre><code>$ heroku local
-</code></pre>
-<p>Api will be available at <a href="http://localhost:5000" rel="nofollow">http://localhost:5000</a></p>
-</article></body></html>
+</div></code></pre>
+<h2 id="working-locally">Working locally</h2>
+<pre class="hljs"><code><div>$ heroku local
+</div></code></pre>
+<p>Api will be available at <a href="http://localhost:5000">http://localhost:5000</a></p>
+
+</body>
+</html>
