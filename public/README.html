@@ -381,17 +381,17 @@ code {
 <p>Response</p>
 <pre class="hljs"><code><div>[
     {
-        &quot;id&quot;: 1,
-        &quot;text&quot;: &quot;Agarra la mochila&quot;,
-        &quot;description&quot;: &quot;Y ponte al sol, esta es una descripción más larga&quot;,
-        &quot;completed&quot;: false,
-        &quot;author&quot;: &quot;:username&quot;,
-        &quot;tags&quot;: [
-            &quot;important&quot;,
-            &quot;school&quot;,
-            &quot;LaSalle&quot;
+        <span class="hljs-attr">"id"</span>: <span class="hljs-number">1</span>,
+        <span class="hljs-attr">"text"</span>: <span class="hljs-string">"Agarra la mochila"</span>,
+        <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Y ponte al sol, esta es una descripción más larga"</span>,
+        <span class="hljs-attr">"completed"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"author"</span>: <span class="hljs-string">":username"</span>,
+        <span class="hljs-attr">"tags"</span>: [
+            <span class="hljs-string">"important"</span>,
+            <span class="hljs-string">"school"</span>,
+            <span class="hljs-string">"LaSalle"</span>
         ],
-        &quot;createdAt&quot;: &quot;2019-12-18T19:12:47.826Z&quot;
+        <span class="hljs-attr">"createdAt"</span>: <span class="hljs-string">"2019-12-18T19:12:47.826Z"</span>
     },
     {
         ...
@@ -402,20 +402,20 @@ code {
 <p><code>POST /users/:username/todos</code></p>
 <pre class="hljs"><code><div>Body
 {
-    &quot;text&quot;: &quot;Agarra la sombrilla&quot;
+    <span class="hljs-attr">"text"</span>: <span class="hljs-string">"Agarra la sombrilla"</span>
 }
 </div></code></pre>
 <h3 id="edit-todo">Edit ToDo</h3>
 <p><code>PATCH /users/:username/todos/:id</code></p>
 <pre class="hljs"><code><div>Body
 {
-    &quot;completed&quot;: true/false,
-    &quot;text&quot;: &quot;New text&quot;,
-    &quot;description&quot;: &quot;New description&quot;,
-    &quot;tags&quot;: [
-        &quot;important&quot;,
-        &quot;school&quot;,
-        &quot;LaSalle&quot;
+    <span class="hljs-attr">"completed"</span>: <span class="hljs-literal">true</span>/<span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"text"</span>: <span class="hljs-string">"New text"</span>,
+    <span class="hljs-attr">"description"</span>: <span class="hljs-string">"New description"</span>,
+    <span class="hljs-attr">"tags"</span>: [
+        <span class="hljs-string">"important"</span>,
+        <span class="hljs-string">"school"</span>,
+        <span class="hljs-string">"LaSalle"</span>
     ]
 }
 </div></code></pre>

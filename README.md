@@ -11,7 +11,7 @@ Each `:username` is a unique todo list
 `GET /users/:username/todos`
 
 Response
-```
+```json
 [
     {
         "id": 1,
@@ -36,7 +36,7 @@ Response
 
 `POST /users/:username/todos`
 
-```
+```json
 Body
 {
     "text": "Agarra la sombrilla"
@@ -47,7 +47,7 @@ Body
 
 `PATCH /users/:username/todos/:id`
 
-```
+```json
 Body
 {
     "completed": true/false,
