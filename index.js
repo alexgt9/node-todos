@@ -125,7 +125,7 @@ const app = express()
     *     description: Create new Todo
     *     parameters:
     *      - $ref: '#/components/schemas/username'
-    *      - $ref: '#/components/schemas/TodoId'
+    *      - $ref: '#/components/schemas/todoId'
     *     requestBody:
     *       required: false
     *       content:
@@ -170,7 +170,7 @@ const app = express()
     *     description: Delete Todo
     *     parameters:
     *      - $ref: '#/components/schemas/username'
-    *      - $ref: '#/components/schemas/TodoId'
+    *      - $ref: '#/components/schemas/todoId'
     *     responses:
     *       200:
     *         description: Empty response.
