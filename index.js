@@ -26,7 +26,7 @@ const app = express()
   .use(express.static(path.join(__dirname, 'public')))
   .use(express.json())
   .use(function(_req, res, next) {
-    res.setHeader('x-data-source', process.env.USE_DATABASE ? 'psql' : 'memory')
+    res.setHeader('x-data-source', useDatabase ? 'psql' : 'memory')
     next();
   })
   .get('/', (req, res) => {
