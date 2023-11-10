@@ -1,13 +1,17 @@
-const express = require('express');
-const uuidv4 = require('uuid/v4');
-const path = require('path');
-var cors = require('cors');
+import express  from 'express';
+import path  from 'path';
+import cors  from 'cors';
+import * as url from 'url';
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-const swaggerJsdoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
+import swaggerJsdoc  from "swagger-jsdoc";
+import swaggerUi  from "swagger-ui-express";
 
 const PORT = process.env.PORT || 5010;
 const publicUrl = process.env.RENDER_EXTERNAL_URL || `http://localhost:${ PORT }`;
+
+import repository from './todoRepositoryMemory.js';
+// import repository from './todoRepositoryPSQL.js';
 
 const todos = {};
 todos['aleh'] = {};
@@ -65,13 +69,11 @@ const app = express()
     *               items:
     *                 $ref: '#/components/schemas/Todo'
     */
-  .get('/users/:username/todos', (req, res) => {
+  .get('/users/:username/todos', async (req, res) => {
       const username = req.params.username;
+      const todos = await repository.getTodos(username)
 
-      if (!todos[username]) {
-          todos[username] = {};
-      }
-      res.json(Object.values(todos[username]))
+      res.json(todos)
   })
   /**
     * @openapi
@@ -96,24 +98,11 @@ const app = express()
     *             schema:
     *               $ref: '#/components/schemas/Todo'
     */
-  .post('/users/:username/todos', (req, res) => {
+  .post('/users/:username/todos', async (req, res) => {
       const username = req.params.username;
 
-      if (!todos[username]) {
-          todos[username] = {};
-      }
+      const newTodo = await repository.createTodo(username, req.body);
 
-      let newTodo = {
-        id: uuidv4(),
-        text: req.body.text,
-        description: req.body.description || '',
-        completed: false,
-        author: username,
-        tags: req.body.tags || [],
-        createdAt: new Date()
-      };
-
-      todos[username][newTodo.id] = newTodo;
       res.json(newTodo);
   })
   /**
@@ -140,26 +129,18 @@ const app = express()
     *             schema:
     *               $ref: '#/components/schemas/Todo'
     */
-  .patch('/users/:username/todos/:id', (req, res) => {
+  .patch('/users/:username/todos/:id', async (req, res) => {
       const username = req.params.username;
       const id = req.params.id;
-      if (!todos[username] || !todos[username][id]) {
-          res.status(404).json({ "error": 'Not found'});
+
+      const updatedTodo = await repository.updateTodo(username, id, req.body);
+      if (!updatedTodo) {
+          res.status(404).json({ "error": 'Todo not found'});
 
           return;
       }
 
-      const completed = req.body.completed ?? todos[username][id].completed;
-      const text = req.body.text || todos[username][id].text;
-      const description = req.body.description || todos[username][id].description;
-      const tags = req.body.tags || todos[username][id].tags;
-
-      todos[username][id].completed = completed;
-      todos[username][id].text = text;
-      todos[username][id].description = description;
-      todos[username][id].tags = tags;
-
-      res.json(todos[username][id]);
+      res.json(updatedTodo);
   })
   /**
     * @openapi
@@ -172,21 +153,21 @@ const app = express()
     *      - $ref: '#/components/schemas/username'
     *      - $ref: '#/components/schemas/todoId'
     *     responses:
-    *       200:
+    *       204:
     *         description: Empty response.
     */
-  .delete('/users/:username/todos/:id', (req, res) => {
+  .delete('/users/:username/todos/:id', async (req, res) => {
       const username = req.params.username;
       const id = req.params.id;
-      if (!todos[username] || !todos[username][id]) {
-          res.status(404).json({ "error": 'Not found'});
+
+      const deletedTodo = await repository.deleteTodo(username, id);
+      if (!deletedTodo) {
+          res.status(404).json({ "error": 'Todo not found'});
 
           return;
       }
 
-      delete todos[username][id];
-
-      res.json({});
+      res.status(204).json({});
   })
 
 // Swagger

@@ -10,9 +10,11 @@
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
+  "type": "module",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.15.2",
+    "pg": "^8.11.3",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.3",
     "uuid": "^3.3.3"
