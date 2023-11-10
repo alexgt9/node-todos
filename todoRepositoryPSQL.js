@@ -2,22 +2,25 @@ import pg from 'pg';
 import uuid from 'uuid';
 import memoryRepository from './todoRepositoryMemory.js';
 
-const pool = new pg.Pool({
+const pool = () => {
+  console.log("Connecting to database")
+  return new pg.Pool({
     connectionString: process.env.DATABASE_URL,
-});
+  });
+};
 
 const getTodos = async (author) => {
-  const res = await pool.query('SELECT * FROM todo WHERE author = $1', [author]);
+  const res = await pool().query('SELECT * FROM todo WHERE author = $1', [author]);
   return res.rows;
 };
 
 const getTodoById = async (author, id) => {
-  const res = await pool.query('SELECT * FROM todo WHERE id = $1 AND author = $2', [id, author]);
+  const res = await pool().query('SELECT * FROM todo WHERE id = $1 AND author = $2', [id, author]);
   return res.rows[0];
 };
 
 const createTodo = async (author, todo, id = null) => {
-  const res = await pool.query(
+  const res = await pool().query(
     'INSERT INTO todo (id, text, description, author) VALUES ($1, $2, $3, $4) RETURNING *', 
     [id ?? uuid.v4(), todo.text, todo.description, author]
   );
@@ -40,7 +43,7 @@ const updateTodo = async (author, id, newTodo) => {
     tags: newTodo.tags || todoToUpdate.tags
   }
   
-  await pool.query(
+  await pool().query(
       'UPDATE todo SET text = $1, description = $2, completed = $3, tags = $4 WHERE id = $5 AND author = $6 RETURNING *', 
       [todo.text, todo.description, todo.completed, JSON.stringify(todo.tags), todo.id, author]
   );
@@ -49,13 +52,13 @@ const updateTodo = async (author, id, newTodo) => {
 };
 
 const deleteTodo = async (author, id) => {
-  const res = await pool.query('DELETE FROM todo WHERE author = $1 AND id = $2', [author, id]);
+  const res = await pool().query('DELETE FROM todo WHERE author = $1 AND id = $2', [author, id]);
 
   return res.rowCount;
 };
 
 const initializeDatabase = async () => {
-  await pool.query(`
+  await pool().query(`
   CREATE TABLE IF NOT EXISTS "todo" (
     "id" uuid NOT NULL,
     "text" varchar NOT NULL,

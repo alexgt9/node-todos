@@ -13,9 +13,13 @@ const publicUrl = process.env.RENDER_EXTERNAL_URL || `http://localhost:${ PORT }
 import repositoryMemory from './todoRepositoryMemory.js';
 import repositoryPsql from './todoRepositoryPSQL.js';
 
-const repository = process.env.USE_DATABASE ? repositoryPsql : repositoryMemory;
+const useDatabase = process.env.USE_DATABASE == '1';
+const repository = useDatabase ? repositoryPsql : repositoryMemory;
 
-repository.initializeDatabase();
+if (useDatabase) {
+  console.log("Using database");
+  repository.initializeDatabase();
+}
 
 const app = express()
   .use(cors())
