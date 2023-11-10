@@ -95,10 +95,15 @@ const deleteTodo = async (author, id) => {
     return true;
 };
 
+const initializeDatabase = async () => {
+    // Nothing to do here
+}
+
 export default {
     getTodos,
     getTodoById,
     createTodo,
     updateTodo,
-    deleteTodo
+    deleteTodo,
+    initializeDatabase,
 };

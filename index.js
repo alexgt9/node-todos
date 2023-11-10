@@ -10,43 +10,21 @@ import swaggerUi  from "swagger-ui-express";
 const PORT = process.env.PORT || 5010;
 const publicUrl = process.env.RENDER_EXTERNAL_URL || `http://localhost:${ PORT }`;
 
-import repository from './todoRepositoryMemory.js';
-// import repository from './todoRepositoryPSQL.js';
+import repositoryMemory from './todoRepositoryMemory.js';
+import repositoryPsql from './todoRepositoryPSQL.js';
 
-const todos = {};
-todos['aleh'] = {};
-todos['aleh']['911d7404-f927-46b8-bde9-759be745061d'] = {
-    id: '911d7404-f927-46b8-bde9-759be745061d',
-    text: 'Agarra la sombrilla',
-    description: '',
-    completed: false,
-    author: 'aleh',
-    tags: [],
-    createdAt: new Date() 
-};
-todos['aleh']['911d7404-f927-46b8-bde9-759be745061b'] = {
-    id: '911d7404-f927-46b8-bde9-759be745061b',
-    text: 'Agarra el bañador',
-    description: 'Y pontelo',
-    completed: false,
-    author: 'aleh',
-    tags: [],
-    createdAt: new Date() 
-};
-todos['aleh']['911d7404-f927-46b8-bde9-759be745061a'] = {
-    id: '911d7404-f927-46b8-bde9-759be745061a',
-    text: 'Ponte a bailar',
-    description: 'Y que salga el sol',
-    completed: false,
-    author: 'aleh',
-    tags: [],
-    createdAt: new Date() 
-};
+const repository = process.env.USE_DATABASE ? repositoryPsql : repositoryMemory;
+
+repository.initializeDatabase();
 
 const app = express()
   .use(cors())
   .use(express.static(path.join(__dirname, 'public')))
   .use(express.json())
+  .use(function(_req, res, next) {
+    res.setHeader('x-data-source', process.env.USE_DATABASE ? 'psql' : 'memory')
+    next();
+  })
   .get('/', (req, res) => {
       res.redirect('/api-docs');
   })
