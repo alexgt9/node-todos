@@ -1,20 +1,23 @@
-import express  from 'express';
-import path  from 'path';
-import cors  from 'cors';
+import express from 'express';
+import path from 'path';
+import cors from 'cors';
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-import swaggerJsdoc  from "swagger-jsdoc";
-import swaggerUi  from "swagger-ui-express";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
 const PORT = process.env.PORT || 5010;
-const publicUrl = process.env.RENDER_EXTERNAL_URL || `http://localhost:${ PORT }`;
+const publicUrl = process.env.RENDER_EXTERNAL_URL || `http://localhost:${PORT}`;
 
 import repositoryMemory from './todoRepositoryMemory.js';
 import repositoryPsql from './todoRepositoryPSQL.js';
 
+import userRepositoryMemory from './userRepositoryMemory.js';
+
 const useDatabase = process.env.USE_DATABASE == '1';
 const repository = useDatabase ? repositoryPsql : repositoryMemory;
+const userRepository = userRepositoryMemory;
 
 if (useDatabase) {
   console.log("Using database");
@@ -25,12 +28,12 @@ const app = express()
   .use(cors())
   .use(express.static(path.join(__dirname, 'public')))
   .use(express.json())
-  .use(function(_req, res, next) {
+  .use(function (_req, res, next) {
     res.setHeader('x-data-source', useDatabase ? 'psql' : 'memory')
     next();
   })
   .get('/', (req, res) => {
-      res.redirect('/api-docs');
+    res.redirect('/api-docs');
   })
   /**
     * @openapi
@@ -52,10 +55,10 @@ const app = express()
     *                 $ref: '#/components/schemas/Todo'
     */
   .get('/users/:username/todos', async (req, res) => {
-      const username = req.params.username;
-      const todos = await repository.getTodos(username)
+    const username = req.params.username;
+    const todos = await repository.getTodos(username)
 
-      res.json(todos)
+    res.json(todos)
   })
   /**
     * @openapi
@@ -81,11 +84,11 @@ const app = express()
     *               $ref: '#/components/schemas/Todo'
     */
   .post('/users/:username/todos', async (req, res) => {
-      const username = req.params.username;
+    const username = req.params.username;
 
-      const newTodo = await repository.createTodo(username, req.body);
+    const newTodo = await repository.createTodo(username, req.body);
 
-      res.json(newTodo);
+    res.json(newTodo);
   })
   /**
     * @openapi
@@ -112,17 +115,17 @@ const app = express()
     *               $ref: '#/components/schemas/Todo'
     */
   .patch('/users/:username/todos/:id', async (req, res) => {
-      const username = req.params.username;
-      const id = req.params.id;
+    const username = req.params.username;
+    const id = req.params.id;
 
-      const updatedTodo = await repository.updateTodo(username, id, req.body);
-      if (!updatedTodo) {
-          res.status(404).json({ "error": 'Todo not found'});
+    const updatedTodo = await repository.updateTodo(username, id, req.body);
+    if (!updatedTodo) {
+      res.status(404).json({ "error": 'Todo not found' });
 
-          return;
-      }
+      return;
+    }
 
-      res.json(updatedTodo);
+    res.json(updatedTodo);
   })
   /**
     * @openapi
@@ -139,45 +142,118 @@ const app = express()
     *         description: Empty response.
     */
   .delete('/users/:username/todos/:id', async (req, res) => {
-      const username = req.params.username;
-      const id = req.params.id;
+    const username = req.params.username;
+    const id = req.params.id;
 
-      const deletedTodo = await repository.deleteTodo(username, id);
-      if (!deletedTodo) {
-          res.status(404).json({ "error": 'Todo not found'});
+    const deletedTodo = await repository.deleteTodo(username, id);
+    if (!deletedTodo) {
+      res.status(404).json({ "error": 'Todo not found' });
 
-          return;
-      }
+      return;
+    }
 
-      res.status(204).json({});
+    res.status(204).json({});
+  })
+  /**
+    * @openapi
+    * /users:
+    *   get:
+    *     tags:
+    *       - users
+    *     description: Get users
+    *     responses:
+    *       200:
+    *         description: Returns all users.
+    *         content:
+    *           application/json:
+    *             schema:
+    *               type: array
+    *               items:
+    *                 $ref: '#/components/schemas/User'
+    */
+  .get('/users', async (req, res) => {
+    const users = await userRepository.getUsers()
+
+    res.json(users)
+  })
+  /**
+    * @openapi
+    * /users:
+    *   post:
+    *     tags:
+    *       - users
+    *     description: Create new User
+    *     requestBody:
+    *       required: true
+    *       content:
+    *         application/json:
+    *           schema:
+    *             $ref: '#/components/schemas/User'
+    *     responses:
+    *       200:
+    *         description: The just created User.
+    *         content:
+    *           application/json:
+    *             schema:
+    *               $ref: '#/components/schemas/User'
+    */
+  .post('/users', async (req, res) => {
+    const newUser = await userRepository.createUser(req.body);
+
+    res.json(newUser);
+  })
+  /**
+    * @openapi
+    * /users/{username}:
+    *   delete:
+    *     tags:
+    *       - users
+    *     description: Delete User
+    *     parameters:
+    *      - $ref: '#/components/schemas/username'
+    *     responses:
+    *       204:
+    *         description: Empty response.
+    */
+  .delete('/users/:username', async (req, res) => {
+    const username = req.params.username;
+
+    const deletedUser = await userRepository.deleteUser(username);
+    if (!deletedUser) {``
+      res.status(404).json({ "error": 'User not found' });
+
+      return;
+    }
+
+    res.status(204).json({});
   })
 
 // Swagger
 const options = {
-    definition: {
-      openapi: "3.0.0",
-      info: {
-        title: "Simple todos API",
-        version: "0.1.0",
-        description: "This is a simple CRUD API to manage todos.  The user 'aleh' contains some examples. The information stored in this API is not persistent. It will be deleted from time to time.",
-      },
-      servers: [
-        {
-          url: publicUrl,
-        },
-      ],
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Simple todos API",
+      version: "0.1.0",
+      description: "This is a simple CRUD API to manage todos.  The user 'aleh' contains some examples. The information stored in this API is not persistent. It will be deleted from time to time.",
     },
-    apis: ["./index.js", "./swagger.js"],
-  };
-  
+    servers: [
+      {
+        url: publicUrl,
+      },
+    ],
+  },
+  apis: ["./index.js", "./swagger.js"],
+};
+
 const specs = swaggerJsdoc(options);
 app.use(
-    "/api-docs",
-    swaggerUi.serve,
-    swaggerUi.setup(specs)
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs)
 );
-  
+
 app.listen(PORT, () => {
-    console.log(`Api docs on ${ publicUrl }/api-docs`);
-    console.log(`Listening on ${ publicUrl }`);
+  console.log(`Api docs on ${publicUrl}/api-docs`);
+  console.log(`Listening on ${publicUrl}`);
 });

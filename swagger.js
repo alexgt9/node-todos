@@ -51,4 +51,28 @@
  *         author: aleh
  *         tags: [beach, happy]
  *         createdAt: 2020-03-10T04:05:06.157Z
+ *     User:
+ *       type: object
+ *       required:
+ *         - username
+ *         - password
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the todo
+ *         username:
+ *           type: string
+ *           description: The username must be unique
+ *         password:
+ *           type: string
+ *           description: The user password
+ *         createdAt:
+ *           type: string
+ *           format: date
+ *           description: The date the todo was added
+ *       example:
+ *         id: 911d7404-f927-46b8-bde9-759be745061d
+ *         username: admin
+ *         password: admin
+ *         createdAt: 2020-03-10T04:05:06.157Z
  */

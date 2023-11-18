@@ -38,11 +38,6 @@ const getTodos = async (author) => {
     return Object.values(todos[author])
 };
 
-const getTodoById = async (author, id) => {
-  const res = await pool.query('SELECT * FROM todo WHERE id = $1 AND author = $2', [id, author]);
-  return res.rows[0];
-};
-
 const createTodo = async (author, todo) => {
     if (!todos[author]) {
         todos[author] = {};
@@ -101,7 +96,6 @@ const initializeDatabase = async () => {
 
 export default {
     getTodos,
-    getTodoById,
     createTodo,
     updateTodo,
     deleteTodo,
