@@ -14,14 +14,16 @@ import repositoryMemory from './todoRepositoryMemory.js';
 import repositoryPsql from './todoRepositoryPSQL.js';
 
 import userRepositoryMemory from './userRepositoryMemory.js';
+import userRepositoryPsql from './userRepositoryPSQL.js';
 
 const useDatabase = process.env.USE_DATABASE == '1';
 const repository = useDatabase ? repositoryPsql : repositoryMemory;
-const userRepository = userRepositoryMemory;
+const userRepository = useDatabase ? userRepositoryPsql : userRepositoryMemory;
 
 if (useDatabase) {
   console.log("Using database");
   repository.initializeDatabase();
+  userRepository.initializeDatabase();
 }
 
 const app = express()
