@@ -75,4 +75,19 @@
  *         username: admin
  *         password: admin
  *         createdAt: 2020-03-10T04:05:06.157Z
+ *     LoginBody:
+ *       type: object
+ *       required:
+ *         - username
+ *         - password
+ *       properties:
+ *         username:
+ *           type: string
+ *           description: The username must be unique
+ *         password:
+ *           type: string
+ *           description: The user password
+ *       example:
+ *         username: admin
+ *         password: admin
  */

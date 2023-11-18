@@ -11,6 +11,12 @@ const getUsers = async (author) => {
   return res.rows;
 };
 
+const login = async (username, password) => {
+  const res = await pool.query('SELECT * FROM users WHERE username = $1 AND password = $2', [username, password]);
+
+  return res.rows.length > 0;
+};
+
 const getUserByUsername = async (username) => {
   const res = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
   return res.rows[0];
@@ -59,6 +65,7 @@ const initializeDatabase = async () => {
 
 export default {
   getUsers,
+  login,
   createUser,
   deleteUser,
   initializeDatabase

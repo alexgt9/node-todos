@@ -18,6 +18,10 @@ const getUsers = async () => {
     return Object.values(users)
 };
 
+const login = async (username, password) => {
+  return users[username] && users[username].password === password;
+};
+
 const createUser = async (user) => {
     let newUser = {
       id: uuid.v4(),
@@ -47,6 +51,7 @@ const initializeDatabase = async () => {
 
 export default {
     getUsers,
+    login,
     createUser,
     deleteUser,
     initializeDatabase,

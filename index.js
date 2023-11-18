@@ -158,6 +158,53 @@ const app = express()
   })
   /**
     * @openapi
+    * /login:
+    *   post:
+    *     tags:
+    *       - users
+    *     description: Login
+    *     requestBody:
+    *       required: true
+    *       content:
+    *         application/json:
+    *           schema:
+    *             $ref: '#/components/schemas/LoginBody'
+    *     responses:
+    *       200:
+    *         description: Success if you are able to login.
+    *         content:
+    *           application/json:
+    *             schema:
+    *               type: array
+    *               items:
+    *                 $ref: '#/components/schemas/User'
+    *       401:
+    *         description: Failure if login or password are wrong.
+    *         content:
+    *           application/json:
+    *             schema:
+    *               type: array
+    *               items:
+    *                 $ref: '#/components/schemas/User'
+    */
+  .post('/login', async (req, res) => {
+    const logged = await userRepository.login(req.body.username, req.body.password)
+
+    if (!logged) {
+      res.status(401).json({ 
+        "success": false,
+        "error": 'Login or password not correct' 
+      });
+
+      return;
+    }
+
+    res.json({
+      sucess: true
+    })
+  })
+  /**
+    * @openapi
     * /users:
     *   get:
     *     tags:
@@ -173,7 +220,7 @@ const app = express()
     *               items:
     *                 $ref: '#/components/schemas/User'
     */
-  .get('/users', async (req, res) => {
+  .get('/users', async (_, res) => {
     const users = await userRepository.getUsers()
 
     res.json(users)
@@ -221,7 +268,7 @@ const app = express()
     const username = req.params.username;
 
     const deletedUser = await userRepository.deleteUser(username);
-    if (!deletedUser) {``
+    if (!deletedUser) {
       res.status(404).json({ "error": 'User not found' });
 
       return;
