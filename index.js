@@ -88,6 +88,12 @@ const app = express()
   .post('/users/:username/todos', async (req, res) => {
     const username = req.params.username;
 
+    if (!req.body.text) {
+      res.status(400).json({ "error": 'Text is required' });
+
+      return;
+    }
+
     const newTodo = await repository.createTodo(username, req.body);
 
     res.json(newTodo);
@@ -191,9 +197,9 @@ const app = express()
     const logged = await userRepository.login(req.body.username, req.body.password)
 
     if (!logged) {
-      res.status(401).json({ 
+      res.status(401).json({
         "success": false,
-        "error": 'Login or password not correct' 
+        "error": 'Login or password not correct'
       });
 
       return;

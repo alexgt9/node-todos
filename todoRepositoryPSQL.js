@@ -17,9 +17,20 @@ const getTodoById = async (author, id) => {
 };
 
 const createTodo = async (author, todo, id = null) => {
+  const defaultTodo = {
+    id: id ?? uuid.v4(),
+    description: '',
+    completed: false,
+    tags: []
+  };
+  const todoToCreate = {
+    ...defaultTodo,
+    ...todo,
+    author
+  };
   const res = await pool.query(
-    'INSERT INTO todo (id, text, description, author) VALUES ($1, $2, $3, $4) RETURNING *', 
-    [id ?? uuid.v4(), todo.text, todo.description, author]
+    'INSERT INTO todo (id, text, description, completed, author, tags) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', 
+    [todoToCreate.id, todoToCreate.text, todoToCreate.description, todoToCreate.completed, todoToCreate.author, JSON.stringify(todoToCreate.tags)]
   );
   return res.rows[0];
 };
@@ -32,18 +43,21 @@ const updateTodo = async (author, id, newTodo) => {
   }
 
   const todo = {
-    id: id,
-    author: author,
-    text: newTodo.text || todoToUpdate.text,
-    description: newTodo.description || todoToUpdate.description,
-    completed: newTodo.completed ?? todoToUpdate.completed,
-    tags: newTodo.tags || todoToUpdate.tags
+    ...todoToUpdate,
+    ...newTodo,
+    id,
+    author
   }
-  
-  await pool.query(
+
+  const result = await pool.query(
       'UPDATE todo SET text = $1, description = $2, completed = $3, tags = $4 WHERE id = $5 AND author = $6 RETURNING *', 
       [todo.text, todo.description, todo.completed, JSON.stringify(todo.tags), todo.id, author]
-  );
+  )
+
+  if (result.rowCount === 0) {
+      console.log("No rows updated")
+      return null
+  }
 
   return todo
 };

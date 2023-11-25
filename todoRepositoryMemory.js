@@ -47,14 +47,13 @@ const createTodo = async (author, todo) => {
       id: uuid.v4(),
       text: todo.text,
       description: todo.description || '',
-      completed: false,
+      completed: todo.completed ?? false,
       author: author,
       tags: todo.tags || [],
       createdAt: new Date()
     };
 
     todos[author][newTodo.id] = newTodo;
-    console.log(newTodo)
 
     return newTodo
 };
@@ -78,10 +77,7 @@ const updateTodo = async (author, id, todo) => {
 };
 
 const deleteTodo = async (author, id) => {
-    console.log(author, id)
-    console.log(todos)
     if (!todos[author] || !todos[author][id]) {
-        console.log('no existe')
         return false;
     }
 
