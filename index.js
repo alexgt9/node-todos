@@ -76,7 +76,7 @@ const app = express()
     *       content:
     *         application/json:
     *           schema:
-    *             $ref: '#/components/schemas/Todo'
+    *             $ref: '#/components/schemas/CreateTodoBody'
     *     responses:
     *       200:
     *         description: The just created Todo.

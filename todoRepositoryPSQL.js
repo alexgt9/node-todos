@@ -18,7 +18,6 @@ const getTodoById = async (author, id) => {
 
 const createTodo = async (author, todo, id = null) => {
   const defaultTodo = {
-    id: id ?? uuid.v4(),
     description: '',
     completed: false,
     tags: []
@@ -26,6 +25,7 @@ const createTodo = async (author, todo, id = null) => {
   const todoToCreate = {
     ...defaultTodo,
     ...todo,
+    id: id ?? uuid.v4(),
     author
   };
   const res = await pool.query(
