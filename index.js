@@ -3,6 +3,7 @@ import path from 'path';
 import cors from 'cors';
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+import morgan from 'morgan';
 
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
@@ -27,6 +28,7 @@ if (useDatabase) {
 }
 
 const app = express()
+  .use(morgan('short'))
   .use(cors())
   .use(express.static(path.join(__dirname, 'public')))
   .use(express.json())
