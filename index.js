@@ -315,4 +315,4 @@ app.listen(PORT, () => {
   console.log(`Listening on ${publicUrl}`);
 });
 
-module.exports = app;
+export default app;
