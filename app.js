@@ -9,7 +9,7 @@ import getPort, { portNumbers } from 'get-port';
 import { swaggerMiddleware } from './swagger.js';
 
 export const PORT = process.env.PORT || await getPort({ port: portNumbers(5100, 5200)});
-export const PUBLIC_URL = process.env.RENDER_EXTERNAL_URL || VERCEL_PUBLIC_URL || `http://localhost:${PORT}`;
+export const PUBLIC_URL = process.env.RENDER_EXTERNAL_URL || process.env.VERCEL_PUBLIC_URL || `http://localhost:${PORT}`;
 
 import repositoryMemory from './todoRepositoryMemory.js';
 import repositoryPsql from './todoRepositoryPSQL.js';
