@@ -314,3 +314,5 @@ app.listen(PORT, () => {
   console.log(`Api docs on ${publicUrl}/api-docs`);
   console.log(`Listening on ${publicUrl}`);
 });
+
+module.exports = app;
