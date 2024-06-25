@@ -309,7 +309,9 @@ const specs = swaggerJsdoc(options);
 app.use(
   "/api-docs",
   swaggerUi.serve,
-  swaggerUi.setup(specs)
+  swaggerUi.setup(specs, { 
+    customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.6.2/swagger-ui.css',
+  } )
 );
 
 export default app;
