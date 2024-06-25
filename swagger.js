@@ -1,3 +1,6 @@
+import swaggerUi from "swagger-ui-express";
+import swaggerJsdoc from "swagger-jsdoc";
+
 /**
  * @openapi
  * components:
@@ -125,3 +128,33 @@
  *         username: admin
  *         password: admin
  */
+const options = (publicUrl) => {
+    return {
+        definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "Simple todos API",
+            version: "0.1.0",
+            description: "This is a simple CRUD API to manage todos.  The user 'aleh' contains some examples. The information stored in this API is not persistent. It will be deleted from time to time.",
+        },
+        servers: [
+            {
+            url: publicUrl,
+            },
+        ],
+        },
+        apis: ["./app.js", "./swagger.js"],
+    }
+};
+
+export function swaggerMiddleware(app, publicUrl) {
+    const specs = swaggerJsdoc(options(publicUrl));
+
+    app.use(
+        "/api-docs",
+        swaggerUi.serve,
+        swaggerUi.setup(specs, { 
+          customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.6.2/swagger-ui.css',
+        } )
+    );
+}
