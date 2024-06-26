@@ -4,12 +4,8 @@ import cors from 'cors';
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 import morgan from 'morgan';
-import getPort, { portNumbers } from 'get-port';
 
 import { swaggerMiddleware } from './swagger.js';
-
-export const PORT = process.env.PORT || await getPort({ port: portNumbers(5100, 5200)});
-export const PUBLIC_URL = process.env.RENDER_EXTERNAL_URL || process.env.VERCEL_PUBLIC_URL || `http://localhost:${PORT}`;
 
 import repositoryMemory from './todoRepositoryMemory.js';
 import repositoryPsql from './todoRepositoryPSQL.js';
@@ -286,6 +282,6 @@ const app = express()
   })
 
 
-swaggerMiddleware(app, PUBLIC_URL);
+swaggerMiddleware(app);
 
 export default app;
